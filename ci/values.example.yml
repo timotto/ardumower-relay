@@ -1,0 +1,12 @@
+# These are the values for the upstream CI.
+# Change them to match your fork.
+
+config:
+  github:
+    owner: timotto
+    repository: ardumower-relay
+    uri: git@github.com:timotto/ardumower-relay.git
+    branch: main
+
+  docker:
+    repository: timotto/ardumower-relay

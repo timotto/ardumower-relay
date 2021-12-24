@@ -1,0 +1,22 @@
+os:
+- name: darwin
+- name: linux
+  docker: true
+- name: windows
+
+arch:
+- name: amd64
+  os: &all
+  - darwin
+  - linux
+  - windows
+- name: arm64
+  os: *all
+- name: arm
+  os: [linux]
+  variants:
+  - "5"
+  - "6"
+  - "7"
+- name: s390x
+  os: [linux]

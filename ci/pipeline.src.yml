@@ -1,0 +1,31 @@
+# Generated using "task set-pipeline"
+platforms:
+- os: darwin
+  arch: amd64
+- os: linux
+  arch: amd64
+  docker: true
+- os: windows
+  arch: amd64
+- os: darwin
+  arch: arm64
+- os: linux
+  arch: arm64
+  docker: true
+- os: windows
+  arch: arm64
+- os: linux
+  arch: arm
+  var: "5"
+  docker: true
+- os: linux
+  arch: arm
+  var: "6"
+  docker: true
+- os: linux
+  arch: arm
+  var: "7"
+  docker: true
+- os: linux
+  arch: s390x
+  docker: true

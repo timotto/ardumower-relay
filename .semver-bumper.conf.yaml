@@ -1,0 +1,13 @@
+tag_prefix: v
+no_match_bump: patch
+
+keywords_major:
+- "^🤑"
+keywords_minor:
+- "^🎉"
+- "^🎢"
+- "^😍"
+- "^🥰"
+keywords_patch:
+- "^🔨"
+- "^🛠️"

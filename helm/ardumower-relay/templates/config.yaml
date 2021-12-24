@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "ardumower-relay.fullname" . }}
+  labels:
+    {{- include "ardumower-relay.labels" . | nindent 4 }}
+data:
+  config.yml: |
+    log: {{ .Values.config.log_level }}
+    server:
+      http:
+        enabled: true
+        address: :8080
+      https:
+        enabled: false
+
+{{- if .Values.config.auth.enabled }}
+    auth:
+      enabled: true
+      filename: /auth/users.txt
+{{- end}}
+
+    monitoring:
+      enabled: {{ .Values.monitoring.enabled }}
+      address: :9102
+
+    app_endpoint:
+      timeout: 10s
+
+    mower_endpoint:
+      read_buffer_size: 1024
+      write_buffer_size: 1024
+      tunnel:
+        ping_interval: {{ .Values.config.ping_interval }}
+        ping_timeout: 10s
+        pong_timeout: 10s

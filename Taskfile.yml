@@ -1,0 +1,40 @@
+# https://taskfile.dev
+
+version: '3'
+
+dotenv: ['.env']
+
+tasks:
+  run:
+    cmds:
+    - go run ./cmd/relay docs/example/config.example.yml
+
+  gen:
+    cmds:
+    - go generate ./...
+
+  test:
+    cmds:
+    - go test -race ./...
+
+  smoketest:
+    cmds:
+    - go run ./test/smoketest
+
+  loadtest:
+    cmds:
+    - go run ./test/loadtest
+
+  # Update the Concourse pipeline
+  # You need the file ci/values.yml for this task. Have a look at ci/values.example.yml.
+  # There are examples for the K8S CI User and Basic Auth credentials file secret in the docs/example/k8s folder.
+  set-pipeline:
+    cmds:
+    - test -n "$FLY_TARGET" || exit 1
+    - test -n "$PIPELINE_NAME" || exit 1
+    - go generate ./ci
+    - fly -t "${FLY_TARGET}" set-pipeline -p "${PIPELINE_NAME}" -c ci/pipeline.yml -l ci/values.yml
+
+  sp:
+    cmds:
+    - task: set-pipeline
