@@ -9,4 +9,5 @@ auth:
   filename: test/loadtest/fixtures/users.txt
 
 monitoring:
-  enabled: false
+  enabled: true
+  address: 127.0.0.1:8088
