@@ -255,6 +255,7 @@ resources:
   check_every: 24h
   source:
     repository: ghcr.io/typositoire/concourse-helm3-resource
+    tag: v1.20.0
 
 - name: semver-bumper
   <<: *github_artifact
@@ -274,6 +275,7 @@ resource_types:
   type: registry-image
   source:
     repository: ghcr.io/typositoire/concourse-helm3-resource
+    tag: v1.20.0
   defaults:
     stable_repo: "false"
 
