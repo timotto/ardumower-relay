@@ -2,7 +2,7 @@
 
 The ArduMower Relay Server exposes 
 an [ArduMower Modem](https://github.com/timotto/ardumower-modem)
-or vanilla(*) [Sunray esp32_ble](https://github.com/Ardumower/Sunray/tree/master/esp32_ble) Sketch 
+or vanilla [Sunray esp32_ble](https://github.com/Ardumower/Sunray/tree/master/esp32_ble) Sketch 
 on the Internet.
 It acts as a bridge 
 between the ArduMower Sunray App and your ArduMower, 
@@ -14,11 +14,9 @@ so you can
 - keep all your browser settings on secure defaults
 
 You can either run your own server with or without authentication,
-or you can apply for credentials to use an already existing server (**).
+or you can apply for credentials to use an already existing server (*).
 
-_(*) as soon as the PR is created and merged_
-
-_(**) currently there are no public servers available_
+_(*) currently there are no public servers available_
 
 ## Running your own Relay Server
 
