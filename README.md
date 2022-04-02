@@ -28,9 +28,7 @@ When you run the Relay Server without any arguments it will listen on port `8080
 
 To fulfill all the claims above you need to expose the Relay Server to the Internet at a publicly trusted HTTPS address.
 
-You can either
-run the Relay Server behind a reverse proxy like [Caddy server](https://caddyserver.com/) which takes care of Lets' Encrypt certificates,
-or you have the option to configure the Relay Server to act as a terminating HTTPS listener by itself. The [exanple configuration file](docs/example/config.example.yml) shows how to setup an HTTPS listener.
+You can run the Relay Server behind a reverse proxy like [Caddy server](https://caddyserver.com/) which takes care of Lets' Encrypt certificates.
 
 ### Single User Mode / Multi User Mode
 

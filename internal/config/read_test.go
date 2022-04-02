@@ -15,10 +15,7 @@ var _ = Describe("ReadConfig", func() {
 log: fatal
 server:
   http:
-    enabled: true
     address: 1.2.3.4:5
-  https:
-    enabled: false
 
 app_endpoint:
   timeout: 60s
@@ -37,9 +34,7 @@ mower_endpoint:
 		Expect(err).ToNot(HaveOccurred())
 
 		Expect(actualResult.LogLevel()).To(Equal(lager.FATAL))
-		Expect(actualResult.Server.Http.Enabled).To(BeTrue())
 		Expect(actualResult.Server.Http.Address).To(Equal("1.2.3.4:5"))
-		Expect(actualResult.Server.Https.Enabled).To(BeFalse())
 
 		Expect(actualResult.AppEndpoint.Timeout).To(Equal(time.Minute))
 		Expect(actualResult.MowerEndpoint.ReadBufferSize).To(Equal(16384))

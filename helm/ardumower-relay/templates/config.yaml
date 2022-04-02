@@ -11,8 +11,6 @@ data:
       http:
         enabled: true
         address: :8080
-      https:
-        enabled: false
 
 {{- if .Values.config.auth.enabled }}
     auth:

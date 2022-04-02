@@ -1,7 +1,6 @@
 package server_test
 
 import (
-	"crypto/tls"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	. "github.com/timotto/ardumower-relay/internal/server"
@@ -35,7 +34,7 @@ var _ = Describe("Server", func() {
 		var errs *util.AsyncErr
 		BeforeEach(func() {
 			errs = util.NewAsyncErr()
-			params = Parameters{Http: HttpParameters{Enabled: true, Address: "localhost:0"}}
+			params = Parameters{Http: HttpParameters{Address: "localhost:0"}}
 			uut = NewServer(aLogger(), params, appEndpoint, mowerEndpoint, statusEndpoint)
 			Expect(uut.Start(errs)).ToNot(HaveOccurred())
 
@@ -49,53 +48,6 @@ var _ = Describe("Server", func() {
 		AfterEach(func() {
 			uut.Stop()
 			wg.Wait()
-		})
-
-		It("serves the app endpoint at /",
-			expectAppEndpoint(&client, &uut, urlFn))
-
-		It("serves the ArduMower endpoint at /",
-			expectMowerEndpoint(&client, &uut, urlFn))
-
-		It("serves the status endpoint at /",
-			expectStatusEndpoint(&client, &uut, urlFn))
-
-		It("serves a health endpoint at /health",
-			expectSpecificEndpoint(http.MethodGet, "/health", "OK", &client, &uut, urlFn))
-	})
-
-	Describe("https endpoint", func() {
-		var urlFn = httpsUrl
-		var errs *util.AsyncErr
-		var pki *tempPki
-		BeforeEach(func() {
-			errs = util.NewAsyncErr()
-			pki = newTempPki()
-
-			client.Transport = &http.Transport{TLSClientConfig: &tls.Config{
-				InsecureSkipVerify: true,
-			}}
-
-			params = Parameters{Https: HttpsParameters{
-				Enabled:  true,
-				Address:  "localhost:0",
-				CertFile: pki.Cert,
-				KeyFile:  pki.Key,
-			}}
-			uut = NewServer(aLogger(), params, appEndpoint, mowerEndpoint, statusEndpoint)
-			Expect(uut.Start(errs)).ToNot(HaveOccurred())
-
-			wg.Add(1)
-			go func() {
-				defer wg.Done()
-				defer errs.ReaderDone()
-				<-errs.C
-			}()
-		})
-		AfterEach(func() {
-			uut.Stop()
-			wg.Wait()
-			pki.Close()
 		})
 
 		It("serves the app endpoint at /",

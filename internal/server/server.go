@@ -16,24 +16,16 @@ type (
 		param  Parameters
 		router *mux.Router
 
-		lHttp, lHttps net.Listener
+		lHttp net.Listener
 
 		stop bool
 		wg   *sync.WaitGroup
 	}
 	Parameters struct {
-		Http  HttpParameters  `yaml:"http"`
-		Https HttpsParameters `yaml:"https"`
+		Http HttpParameters `yaml:"http"`
 	}
 	HttpParameters struct {
-		Enabled bool   `yaml:"enabled"`
 		Address string `yaml:"address"`
-	}
-	HttpsParameters struct {
-		Enabled  bool   `yaml:"enabled"`
-		Address  string `yaml:"address"`
-		KeyFile  string `yaml:"key"`
-		CertFile string `yaml:"cert"`
 	}
 )
 
@@ -62,10 +54,6 @@ func (s *Server) Start(errs *util.AsyncErr) error {
 		return fmt.Errorf("failed to start http Server: %w", err)
 	}
 
-	if err := s.startHttps(errs); err != nil {
-		return fmt.Errorf("failed to start https Server: %w", err)
-	}
-
 	s.logStarted()
 
 	return nil
@@ -78,18 +66,11 @@ func (s *Server) Stop() {
 		_ = s.lHttp.Close()
 	}
 
-	if s.lHttps != nil {
-		_ = s.lHttps.Close()
-	}
-
 	s.wg.Wait()
 }
 
 func (s *Server) startHttp(errs *util.AsyncErr) error {
 	p := s.param.Http
-	if !p.Enabled {
-		return nil
-	}
 
 	serve := func(l net.Listener, h http.Handler) error {
 		return http.Serve(l, h)
@@ -97,22 +78,6 @@ func (s *Server) startHttp(errs *util.AsyncErr) error {
 
 	var err error
 	s.lHttp, err = s.listenAndServe(p.Address, serve, errs)
-
-	return err
-}
-
-func (s *Server) startHttps(errs *util.AsyncErr) error {
-	p := s.param.Https
-	if !p.Enabled {
-		return nil
-	}
-
-	serve := func(l net.Listener, h http.Handler) error {
-		return http.ServeTLS(l, h, p.CertFile, p.KeyFile)
-	}
-
-	var err error
-	s.lHttps, err = s.listenAndServe(p.Address, serve, errs)
 
 	return err
 }
@@ -147,20 +112,12 @@ func (s *Server) logStarted() {
 		data["http"] = s.lHttp.Addr().String()
 	}
 
-	if s.lHttps != nil {
-		data["https"] = s.lHttps.Addr().String()
-	}
-
 	s.logger.Info("started", data)
 }
 
-func (s *Server) Address() (httpAddress, httpsAddress string) {
+func (s *Server) Address() (httpAddress string) {
 	if s.lHttp != nil {
 		httpAddress = s.lHttp.Addr().String()
-	}
-
-	if s.lHttps != nil {
-		httpsAddress = s.lHttps.Addr().String()
 	}
 
 	return

@@ -30,7 +30,6 @@ func ReadConfig(filename string) (*Configuration, error) {
 
 func DefaultConfig() (*Configuration, error) {
 	cfg := &Configuration{}
-	cfg.Server.Http.Enabled = true
 	cfg.Server.Http.Address = ":8080"
 
 	return cfg, cfg.Validate()
