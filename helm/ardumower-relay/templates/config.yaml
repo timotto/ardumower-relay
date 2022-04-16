@@ -16,6 +16,10 @@ data:
     auth:
       enabled: true
       filename: /auth/users.txt
+{{- else if .Values.config.auth.free_for_all }}
+    auth:
+      enabled: false
+      free_for_all: true
 {{- end}}
 
     monitoring:

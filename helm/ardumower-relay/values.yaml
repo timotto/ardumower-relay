@@ -17,6 +17,7 @@ config:
   ping_interval: 5m
   auth:
     enabled: false
+    free_for_all: false
 
     # enabled: true
     # secretName: relay-users

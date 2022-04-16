@@ -28,12 +28,28 @@ To fulfill all the claims above you need to expose the Relay Server to the Inter
 
 You can run the Relay Server behind a reverse proxy like [Caddy server](https://caddyserver.com/) which takes care of Lets' Encrypt certificates.
 
-### Single User Mode / Multi User Mode
+### Authentication
 
-Single User Mode is a euphemism when the server is running without authentication.
+#### No Authentication
 
-To enable authentication you need to create a text file containing the valid credentials and configure the server to use it.
+By default, the server runs without authentication. This allows only a single ArduMower per server.
+
+#### Static credentials
+
+Store username and password combinations in a text file. Only those credentials will allow access to the server.
 The [example credentials file](docs/example/users.example.plaintext) is used in the [exanple configuration file](docs/example/config.example.yml).
+
+#### Free For All
+
+The server allows any credentials.
+As long as you use the same credentials in the ArduMower Modem and in the Sunray App, you can control your ArduMower. 
+Add this to your `config.yml` to enable Free For All:
+
+```yaml
+auth:
+  enabled: false
+  free_for_all: true
+```
 
 ### Using the binary
 
