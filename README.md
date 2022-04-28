@@ -14,9 +14,11 @@ so you can
 - keep all your browser settings on secure defaults
 
 You can either run your own server with or without authentication,
-or you can apply for credentials to use an already existing server (*).
+or use the public relay at https://ardumower-relay.herokuapp.com.
 
-_(*) currently there are no public servers available_
+The public relay is configured to run in *Free For All* authentication. 
+All credentials are allowed. Just use the same credentials in Sunray app and your ArduMower. 
+No registration is required.
 
 ## Running your own Relay Server
 
@@ -30,26 +32,15 @@ You can run the Relay Server behind a reverse proxy like [Caddy server](https://
 
 ### Authentication
 
-#### No Authentication
+#### Free For All
 
-By default, the server runs without authentication. This allows only a single ArduMower per server.
+By default, the server allows any credentials.
+As long as you use the same credentials in the ArduMower Modem and in the Sunray App, you can control your ArduMower.
 
 #### Static credentials
 
 Store username and password combinations in a text file. Only those credentials will allow access to the server.
 The [example credentials file](docs/example/users.example.plaintext) is used in the [exanple configuration file](docs/example/config.example.yml).
-
-#### Free For All
-
-The server allows any credentials.
-As long as you use the same credentials in the ArduMower Modem and in the Sunray App, you can control your ArduMower. 
-Add this to your `config.yml` to enable Free For All:
-
-```yaml
-auth:
-  enabled: false
-  free_for_all: true
-```
 
 ### Using the binary
 
