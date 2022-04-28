@@ -30,7 +30,16 @@ func ReadConfig(filename string) (*Configuration, error) {
 
 func DefaultConfig() (*Configuration, error) {
 	cfg := &Configuration{}
+
 	cfg.Server.Http.Address = ":8080"
+	if port, ok := os.LookupEnv("PORT"); ok {
+		cfg.Server.Http.Address = ":" + port
+	}
+
+	if val, ok := os.LookupEnv("MONITORING"); ok {
+		cfg.Monitoring.Enabled = true
+		cfg.Monitoring.Address = val
+	}
 
 	return cfg, cfg.Validate()
 }

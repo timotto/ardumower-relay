@@ -10,7 +10,7 @@ import (
 var _ = Describe("FreeAuth", func() {
 	var uut Auth
 	BeforeEach(func() {
-		uut = NewAuth(aLogger(), valid(Parameters{FreeForAll: true}))
+		uut = NewAuth(aLogger(), valid(Parameters{}))
 	})
 	When("the request has no credentials", func() {
 		It("returns an error", func() {

@@ -6,7 +6,6 @@ server:
 auth:
   enabled: true
   filename: users.example.plaintext
-  free_for_all: false
 
 monitoring:
   enabled: true

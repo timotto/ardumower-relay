@@ -25,11 +25,6 @@ func NewAuth(logger lager.Logger, param Parameters) Auth {
 		return newBasicAuth(logger, param)
 	}
 
-	if param.FreeForAll {
-		logger.Info("authentication", lager.Data{"access": "free-for-all"})
-		return newFreeAuth(logger)
-	}
-
-	logger.Info("authentication", lager.Data{"access": "anonymous"})
-	return newAnonAuth()
+	logger.Info("authentication", lager.Data{"access": "free-for-all"})
+	return newFreeAuth(logger)
 }

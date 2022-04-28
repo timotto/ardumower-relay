@@ -17,14 +17,5 @@ var _ = Describe("Param", func() {
 				})
 			})
 		})
-		Describe("FreeForAll == true", func() {
-			When("also Enabled == true", func() {
-				It("returns an error", func() {
-					uut := Parameters{Enabled: true, Filename: "not-empty", FreeForAll: true}
-
-					Expect(uut.Validate()).To(HaveOccurred())
-				})
-			})
-		})
 	})
 })
